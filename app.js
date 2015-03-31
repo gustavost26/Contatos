@@ -8,7 +8,7 @@ var session      = require('express-session');
 var load 		 = require('express-load');
 var mongoose     = require('mongoose');
 
-//Conexão com mongodb
+//Conexão com mongodb GST
 mongoose.connect('mongodb://localhost/acadtec', function(err){
 	if(err){
 		console.log('Erro ao conectar no mongodb: ' + err);
