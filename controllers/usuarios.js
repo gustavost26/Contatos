@@ -2,15 +2,11 @@ module.exports = function(app){
 
 	var Usuario = app.models.usuarios;
 
+    //console.log(Usuario);
+
 	var UsuarioController = {
 		index: function(req, res){
-			Usuario.find(function(err, dados){
-				if(err){
-					//
-				}else{
-					res.render('usuarios/index', {lista: dados});
-				}
-			});
+			console.log('Oi');
 		},
 		create: function(req, res){
 			res.render('usuarios/create');

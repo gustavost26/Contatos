@@ -6,16 +6,26 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var load 		 = require('express-load');
-var mongoose     = require('mongoose');
+var mysql        = require('mysql');
+//var mongoose     = require('mongoose');
+
+ connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'xdental_web'
+});
+
+connection.connect();
 
 //Conexão com mongodb
-mongoose.connect('mongodb://localhost/acadtec', function(err){
+/*mongoose.connect('mongodb://localhost/acadtec', function(err){
 	if(err){
 		console.log('Erro ao conectar no mongodb: ' + err);
 	}else{
 		console.log('Conexão com o mongodb efetuada com sucesso!');
 	}
-});
+});*/
 
 //var routes = require('./routes/index');
 //var users  = require('./routes/users');
