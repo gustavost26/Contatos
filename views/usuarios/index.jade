@@ -1,0 +1,24 @@
+extends ../layout
+block content
+	h1 Usuários
+	a(href="/usuarios/create", class="btn btn-success") Cadastrar
+	br
+	br
+	if lista.length > 0
+		table(class="table table-striped")
+			thead
+				tr
+					th ID
+					th Nome
+					th E-mail
+					th Data
+					th Ações
+			tbody
+				each valor in lista
+					tr
+						td #{valor._id}
+						td #{valor.nome}
+						td #{valor.email}
+						td #{valor.data_cad}
+	else
+		p Nenhum registro encontrado!
