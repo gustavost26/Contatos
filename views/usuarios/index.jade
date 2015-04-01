@@ -4,6 +4,14 @@ block content
 	a(href="/usuarios/create", class="btn btn-success") Cadastrar
 	br
 	br
+	if messages.erro
+		div(class="alert alert-danger")
+			p #{mensages.erro}
+		brbh gvyn
+	if messages.info
+		div(class="alert alert-success")
+			p #{mensages.info}
+		br
 	if lista.length > 0
 		table(class="table table-striped")
 			thead

@@ -7,6 +7,7 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var load 		 = require('express-load');
 var mongoose     = require('mongoose');
+var flash 		 = require('express-flash');
 
 //Conexão com mongodb
 mongoose.connect('mongodb://localhost/acadtec', function(err){
@@ -36,6 +37,7 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(session({ secret: 'aulanodejsacadtec009933gst26' }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 
 //app.use('/', routes);
 //app.use('/users', users);
