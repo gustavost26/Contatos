@@ -7,4 +7,10 @@ module.exports = function(app){
 	app.route('/usuarios/create')
 		.get(usuario.create)
 		.post(usuario.post);
+
+	app.route('/usuarios/show/:id').get(usuario.show);
+	app.route('/usuarios/delete/:id').post(usuario.delete);
+	app.route('/usuarios/edit/:id')
+		.get(usuario.edit)
+		.post(usuario.update);
 }

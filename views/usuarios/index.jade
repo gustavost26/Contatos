@@ -6,11 +6,11 @@ block content
 	br
 	if messages.erro
 		div(class="alert alert-danger")
-			p #{mensages.erro}
-		brbh gvyn
+			p #{messages.erro}
+		br
 	if messages.info
 		div(class="alert alert-success")
-			p #{mensages.info}
+			p #{messages.info}
 		br
 	if lista.length > 0
 		table(class="table table-striped")
@@ -27,6 +27,15 @@ block content
 						td #{valor._id}
 						td #{valor.nome}
 						td #{valor.email}
-						td #{valor.data_cad}
+						td #{moment(valor.data_cad).format('DD/MM/YYYY HH:MM:ss')}
+						td
+							a(href="/usuarios/show/#{valor._id}", class="btn btn-info btn-xs", title="Visualizar")
+								span(class="glyphicon glyphicon-search")
+							span &nbsp
+							a(href="/usuarios/edit/#{valor._id}", class="btn btn-primary btn-xs", title="Editar")
+								span(class="glyphicon glyphicon-pencil")
+							span &nbsp
+							a(href="/usuarios/delete/#{valor._id}", class="btn btn-danger btn-xs", title="Excluir")
+								span(class="glyphicon glyphicon-remove")
 	else
 		p Nenhum registro encontrado!
