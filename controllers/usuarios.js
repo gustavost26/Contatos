@@ -1,5 +1,6 @@
 module.exports = function(app){
 
+	var validacao = require('../validacoes/usuarios');
 	var Usuario = app.models.usuarios;
 
 	var UsuarioController = {
@@ -14,23 +15,37 @@ module.exports = function(app){
 			});
 		},
 		create: function(req, res){
-			res.render('usuarios/create');
+			res.render('usuarios/create', {user: new Usuario()});
 		},
 		post: function(req, res){
-			var model      = new Usuario();
-			model.nome     = req.body.nome;
-			model.email    = req.body.email;
-			model.site     = req.body.site;
-			model.password = model.generateHash(req.body.password);
-			model.save(function(err){
-				if(err){
-					req.flash('erro', 'Erro ao cadastrar: ' + err);
-					res.render('usuarios/create', {user: req.body});
-				}else{
-					req.flash('info', 'Registro cadastrado com sucesso!');
-					res.redirect('/usuarios');
-				}
-			});
+			if(validacao(req, res)){
+				var model      = new Usuario();
+				model.nome     = req.body.nome;
+				model.email    = req.body.email;
+				model.site     = req.body.site;
+				model.password = model.generateHash(req.body.password);
+
+				Usuario.findOne({'email': model.email}, function(err, data){
+					if(data){
+						req.flash('erro', 'E-mail encontra-se cadastrado, tente outro.');
+						res.render('usuarios/create', {user: model});
+					}else{
+						model.save(function(err){
+							if(err){
+								req.flash('erro', 'Erro ao cadastrar: ' + err);
+								res.render('usuarios/create', {user: req.body});
+							}else{
+								req.flash('info', 'Registro cadastrado com sucesso!');
+								res.redirect('/usuarios');
+							}
+						});
+					}
+				});
+
+
+			}else{
+				res.render('usuarios/create', {user: req.body});
+			}
 		},
 		show: function(req, res){
 			Usuario.findById(req.params.id, function(err, dados){
@@ -59,27 +74,30 @@ module.exports = function(app){
 					req.flash('erro', 'Erro ao editar usuário: ' + err);
 					res.redirect('/usuarios');
 				}else{
-					req.flash('info', 'Registro excluido com sucesso!');
 					res.render('usuarios/edit', {dados: data});
 				}
 			});
 		},
 		update: function(req, res){
-			Usuario.findById(req.params.id, function(err, data){
-				var model  = data;
-				model.nome = req.body.nome;
-				model.site = req.body.site;
+			if(validacao(req, res)){
+				Usuario.findById(req.params.id, function(err, data){
+					var model  = data;
+					model.nome = req.body.nome;
+					model.site = req.body.site;
 
-				model.save(function(err){
-					if(err){
-						req.flash('erro', 'Erro ao editar usuário: ' + err);
-						res.render('usuarios/edit', {dados: model});
-					}else{
-						req.flash('info', 'Registro atualizado com sucesso!');
-						res.redirect('/usuarios');
-					}
+					model.save(function(err){
+						if(err){
+							req.flash('erro', 'Erro ao editar usuário: ' + err);
+							res.render('usuarios/edit', {dados: model});
+						}else{
+							req.flash('info', 'Registro atualizado com sucesso!');
+							res.redirect('/usuarios');
+						}
+					});
 				});
-			});
+			}else{
+				res.render('usuarios/edit', {user: req.body});
+			}
 		}
 	}
 

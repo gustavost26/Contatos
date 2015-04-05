@@ -4,7 +4,7 @@ var bcrypt   = require('bcrypt-nodejs');
 module.exports = function(){
 	var usuarioSchema = mongoose.Schema({
 		nome     : {type: String, trim: true},
-		email    : {type: String, trim: true},
+		email    : {type: String, trim: true, unique: true, index: true},
 		site     : {type: String, trim: true},
 		password : {type: String},
 		data_cad : {type: Date, default: Date.now}

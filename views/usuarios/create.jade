@@ -6,22 +6,24 @@ block content
 	br
 	if messages.erro
 		div(class="alert alert-danger")
-			p #{messages.erro}
+			each msg in messages.erro
+				b #{msg}
+				br
 		br
 	form(method="POST", action="/usuarios/create", role="form")
 		div(class="form-group")
 			label Nome
-			input(type="text", class="form-control", name="nome", placeholder="Nome", autofocus)
+			input(type="text", class="form-control", name="nome", value="#{user.nome || ''}",placeholder="Nome", autofocus, required)
 		div(class="form-group")
 			label E-mail
-			input(type="email", class="form-control", name="email", placeholder="E-mail", autofocus)
+			input(type="email", class="form-control", name="email", value="#{user.email || ''}", placeholder="E-mail", autofocus, required)
 		div(class="form-group")
 			label Site
-			input(type="text", class="form-control", name="site", placeholder="Site", value="http://")
+			input(type="text", class="form-control", name="site", value="#{user.site || 'http://'}", placeholder="Site")
 		div(class="form-group")
 			label Senha
-			input(type="password", class="form-control", name="password", placeholder="Senha", autofocus)
+			input(type="password", class="form-control", name="password", placeholder="Senha", autofocus, required)
 		div(class="form-group")
 			label Confirmar Senha
-			input(type="password", class="form-control", name="password_confirmar", placeholder="Confirmar Senha", autofocus)
+			input(type="password", class="form-control", name="password_confirmar", placeholder="Confirmar Senha", autofocus, required)
 		button(type="submit", class="btn btn-success") Salvar
