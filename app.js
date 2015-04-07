@@ -41,7 +41,9 @@ app.use(flash());
 
 //Helpers
 app.use(function(req, res, next){
-	res.locals.moment = moment;
+	res.locals.session  = req.session.usuario;
+	res.locals.isLogged = req.session.usuario ? true : false;
+	res.locals.moment   = moment;
 	next();
 });
 

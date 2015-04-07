@@ -1,6 +1,6 @@
 module.exports = function(app){
 
-	var usuario = app.controllers.usuarios;
+	var usuario    = app.controllers.usuarios;
 	var autenticar = require('../middleware/autenticar');
 
 	app.route('/usuarios').get(autenticar, usuario.index);
